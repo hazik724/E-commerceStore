@@ -5,7 +5,8 @@ import { Toaster } from "sonner";
 import PageWrapper from "@/components/PageWrapper";
 function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <ClerkProvider>
+      <div>
+
         <Navbar/>
         <Toaster
   position="bottom-right"
@@ -23,7 +24,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 />
         <main><PageWrapper>{children}</PageWrapper></main>
         <Footer/>
-        </ClerkProvider>
+  </div>
     )
 }
 export default Layout;

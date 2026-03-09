@@ -12,7 +12,7 @@ export default function Navbar() {
   const menuLinks = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/product" },
-    { name: "About", href: "#" },
+    { name: "About", href: "/about" },
   ]
 
   return (

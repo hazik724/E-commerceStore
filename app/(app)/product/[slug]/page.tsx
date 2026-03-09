@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client"
 import Image from "next/image"
 import { urlFor } from "@/sanity/lib/image"
 import CartButton from "./CartButton"
+import ProductGallery from "@/components/ProductGallery"
 
 async function getProduct(slug: string) {
   const query = `*[_type == "product" && slug.current == $slug][0]{
@@ -36,23 +37,12 @@ export default async function Page({
   return (
     <div className="bg-white text-black">
     <div className="max-w-7xl mx-auto px-8 py-24">
-      <div className="grid md:grid-cols-2 gap-24 items-start">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-start">
         
         {/* LEFT — Large Minimal Image */}
-        <div className="relative w-full aspect-[4/5] bg-neutral-100 overflow-hidden">
-          <Image
-            src={
-              product.images?.[0]
-                ? urlFor(product.images[0]).width(1200).url()
-                : "/placeholder.png"
-            }
-            alt={product.title}
-            fill
-            priority
-            className="object-cover hover:scale-[1.02] transition duration-700 ease-out"
-          />
-        </div>
-  
+        <div className="w-full max-w-full">
+  <ProductGallery images={product.images} />
+</div>
         {/* RIGHT — Clean Editorial Layout */}
         <div className="flex flex-col justify-start space-y-12">
           
