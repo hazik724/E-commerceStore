@@ -19,7 +19,7 @@ export default function ProductGallery({ images }: { images: any[] }) {
     <div className="w-full">
 
       {/* MAIN IMAGE */}
-      <div className="relative w-full aspect-square md:aspect-[4/5] bg-neutral-100 overflow-hidden rounded-md">
+      <div className="relative w-full h-[70vh] md:h-auto md:aspect-[4/5] bg-neutral-100 overflow-hidden">
         <Image
           src={urlFor(images[selected]).width(1200).url()}
           alt="product"
@@ -35,7 +35,7 @@ export default function ProductGallery({ images }: { images: any[] }) {
           <button
             key={index}
             onClick={() => setSelected(index)}
-            className={`relative min-w-[65px] h-[65px] rounded-md overflow-hidden border ${
+            className={`relative min-w-[65px] h-[65px]  overflow-hidden border ${
               selected === index ? "border-black" : "border-neutral-300"
             }`}
           >

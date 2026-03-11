@@ -1,8 +1,8 @@
 import CinematicTextSlider from "@/components/AnimatedTextSlider"
-import AnimatedTextSlider from "@/components/AnimatedTextSlider"
 import CategoryHighlight from "@/components/categoryHighlights"
 import FeaturedProducts from "@/components/featuredProducts"
 import HeroCrousal from "@/components/heroCrousal"
+
 
 export default async function HomePage(
   ){
@@ -12,6 +12,8 @@ export default async function HomePage(
   <CinematicTextSlider/>
   <FeaturedProducts/>
   <CategoryHighlight/>
+  <FeaturedProducts/>
+
     </div>
   )
 }

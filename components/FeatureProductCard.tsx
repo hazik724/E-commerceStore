@@ -39,7 +39,7 @@ export default function FeaturedProductCard({ product }: Props) {
   }
 
   return (
-    <div className="group relative bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
+    <div className="group relative bg-white dark:bg-gray-900  overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
       {/* IMAGE */}
       <Link href={`/product/${product.slug.current}`}>
         <div className="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden">

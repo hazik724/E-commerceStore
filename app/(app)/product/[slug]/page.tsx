@@ -3,6 +3,7 @@ import Image from "next/image"
 import { urlFor } from "@/sanity/lib/image"
 import CartButton from "./CartButton"
 import ProductGallery from "@/components/ProductGallery"
+import FeaturedProducts from "@/components/featuredProducts"
 
 async function getProduct(slug: string) {
   const query = `*[_type == "product" && slug.current == $slug][0]{
@@ -91,7 +92,9 @@ export default async function Page({
         </div>
       </div>
     </div>
+    <FeaturedProducts/>
   </div>
+  
   
   )
 }
