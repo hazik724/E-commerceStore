@@ -64,7 +64,7 @@ export default function CategoryProductCard({ product }: Props) {
           </span>
           {product.discountPrice && (
             <span className="line-through text-gray-400 text-xs md:text-sm">
-              ${product.price}
+              PKR {product.price}
             </span>
           )}
         </div>

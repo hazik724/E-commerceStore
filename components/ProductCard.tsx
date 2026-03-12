@@ -55,7 +55,7 @@ export default function ProductCard({ product }: Props) {
         <div className="flex items-center gap-2 text-sm">
 
           <span className="text-black font-medium">
-            ${product.discountPrice ?? product.price}
+            PKR {product.discountPrice ?? product.price}
           </span>
 
           {product.discountPrice && (

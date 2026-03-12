@@ -7,6 +7,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 
 export default function CheckoutPage() {
+
+
+  const [errors, setErrors] = useState<any>({})
   const { items, clearCart } = useCartStore()
 
   const [form, setForm] = useState({
@@ -31,17 +34,22 @@ export default function CheckoutPage() {
     setForm({ ...form, [e.target.name]: e.target.value })
 
   const handleOrder = async () => {
-    if (
-      !form.customerName ||
-      !form.phone ||
-      !form.addressLine1 ||
-      !form.city ||
-      !form.state ||
-      !form.postalCode
-    ) {
-      alert("Please fill all required fields!")
-      return
-    }
+    const newErrors: any = {}
+
+if (!form.customerName) newErrors.customerName = "Full name is required"
+if (!form.email) newErrors.email = "Email is requierd"
+if (!form.phone) newErrors.phone = "Phone number is required"
+if (!form.addressLine1) newErrors.addressLine1 = "Address is required"
+if (!form.city) newErrors.city = "City is required"
+if (!form.state) newErrors.state = "State is required"
+if (!form.postalCode) newErrors.postalCode = "Postal code is required"
+
+if (Object.keys(newErrors).length > 0) {
+  setErrors(newErrors)
+  return
+}
+
+setErrors({})
 
     setLoading(true)
 
@@ -90,26 +98,55 @@ export default function CheckoutPage() {
 
   if (items.length === 0 && !success)
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center">
-        <h2 className="text-3xl md:text-4xl font-light mb-4 text-white">
-          Your Bag is Empty
-        </h2>
+      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center relative">
 
-        <p className="text-gray-400 mb-8">
-          Add items to your bag to proceed.
-        </p>
-
-        <Link href="/product">
-          <button className="bg-gold-500 text-black uppercase tracking-widest font-semibold py-4 px-8 rounded-2xl shadow-2xl hover:brightness-110 transition-all duration-300">
-            Browse Products
-          </button>
-        </Link>
+      {/* Glow background */}
+      <div className="absolute w-[400px] h-[400px] bg-gold-500/10 blur-[120px] rounded-full"></div>
+    
+      {/* Icon */}
+      <div className="w-24 h-24 flex items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 shadow-xl">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10 text-gold-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+            d="M5 8h14l-1.5 11h-11L5 8zM9 8V6a3 3 0 016 0v2"
+          />
+        </svg>
       </div>
+    
+      {/* Title */}
+      <h2 className="text-4xl md:text-5xl font-serif tracking-wide mb-4 text-white">
+        Your Bag is Empty
+      </h2>
+    
+      {/* Description */}
+      <p className="text-gray-400 max-w-md mb-10 leading-relaxed">
+        Looks like you haven’t added anything yet. Discover our premium collection
+        and find something you’ll love.
+      </p>
+    
+      {/* Button */}
+      <Link href="/product">
+        <button className="group relative overflow-hidden bg-white text-black uppercase tracking-widest font-semibold py-4 px-10 rounded-2xl shadow-2xl transition-all duration-300">
+    
+          <span className="relative z-10">Browse Products</span>
+    
+          {/* hover glow */}
+          <span className="absolute inset-0 bg-gold-500 opacity-0 group-hover:opacity-20 transition duration-300"></span>
+    
+        </button>
+      </Link>
+    
+    </div>
     )
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white px-4 md:px-12 py-16">
-      <h1 className="text-5xl md:text-6xl font-serif text-center mb-16 tracking-widest">
+      <h1 className="text-5xl md:text-6xl font-light text-center mb-16 tracking-widest">
         Checkout
       </h1>
 
@@ -124,7 +161,7 @@ export default function CheckoutPage() {
           className="bg-black/50 backdrop-blur-md p-8 rounded-3xl shadow-2xl space-y-8 border border-gold-500"
         >
 
-          <h2 className="text-2xl font-semibold border-b border-gold-500 pb-2">
+          <h2 className="text-2xl font-light border-b border-gold-500 pb-2">
             Shipping Details
           </h2>
 
@@ -141,44 +178,58 @@ export default function CheckoutPage() {
             { name: "deliveryInstructions", label: "Delivery Instructions" },
           ].map((field) => (
 
-            <div key={field.name} className="relative">
+            <div key={field.name} className="space-y-2">
 
-              {field.name === "deliveryInstructions" ? (
-
-                <textarea
-                  name={field.name}
-                  value={form[field.name as keyof typeof form]}
-                  onChange={handleChange}
-                  rows={3}
-                  className="peer w-full bg-transparent border-b border-white/30 focus:border-gold-500 py-3 px-1 outline-none placeholder-transparent transition resize-none"
-                  placeholder={field.label}
-                />
-
-              ) : (
-
-                <input
-                  type={field.type || "text"}
-                  name={field.name}
-                  value={form[field.name as keyof typeof form]}
-                  onChange={handleChange}
-                  className="peer w-full bg-transparent border-b border-white/30 focus:border-gold-500 py-3 px-1 outline-none placeholder-transparent transition"
-                  placeholder={field.label}
-                />
-
-              )}
-
-              <label className="absolute left-1 top-3 text-white/60 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-white/40 peer-focus:top-0 peer-focus:text-gold-500 peer-focus:text-xs">
-                {field.label}
-              </label>
-
-            </div>
+            <label className="text-sm text-gray-400">
+              {field.label}
+            </label>
+          
+            {field.name === "deliveryInstructions" ? (
+          
+              <textarea
+                name={field.name}
+                value={form[field.name as keyof typeof form]}
+                onChange={handleChange}
+                rows={3}
+                className={`w-full bg-black/40 border rounded-xl px-4 py-3 outline-none transition
+                ${errors[field.name] 
+                  ? "border-red-500 focus:border-red-500" 
+                  : "border-white/20 focus:border-gold-500"}
+                `}
+                placeholder={field.label}
+              />
+          
+            ) : (
+          
+              <input
+                type={field.type || "text"}
+                name={field.name}
+                value={form[field.name as keyof typeof form]}
+                onChange={handleChange}
+                className={`w-full bg-black/40 border rounded-xl px-4 py-3 outline-none transition
+                ${errors[field.name] 
+                  ? "border-red-500 focus:border-red-500" 
+                  : "border-white/20 focus:border-gold-500"}
+                `}
+                placeholder={field.label}
+              />
+          
+            )}
+          
+            {errors[field.name] && (
+              <p className="text-red-400 text-sm">
+                {errors[field.name]}
+              </p>
+            )}
+          
+          </div>
 
           ))}
 
           {/* Payment */}
 
           <div className="mt-4">
-            <h3 className="text-lg font-semibold mb-2">
+            <h3 className="text-lg font-light mb-2">
               Payment Method
             </h3>
 
@@ -199,7 +250,7 @@ export default function CheckoutPage() {
           className="bg-black/50 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-gold-500 flex flex-col space-y-6"
         >
 
-          <h2 className="text-2xl font-semibold border-b border-gold-500 pb-2">
+          <h2 className="text-2xl font-light border-b border-gold-500 pb-2">
             Order Summary
           </h2>
 
@@ -214,15 +265,15 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex-1">
-                  <p className="font-serif text-lg">{item.title}</p>
+                  <p className="font-light text-lg">{item.title}</p>
 
                   <p className="text-gray-400 text-sm">
-                    {item.quantity} × ${item.price.toFixed(2)}
+                    {item.quantity} × PKR {item.price.toFixed(2)}
                   </p>
                 </div>
 
                 <p className="font-semibold text-gold-500">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  PKR {(item.price * item.quantity).toFixed(2)}
                 </p>
 
               </div>
@@ -233,7 +284,7 @@ export default function CheckoutPage() {
 
           <div className="border-t border-gold-500 pt-4 flex justify-between font-semibold text-lg">
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>PKR {total.toFixed(2)}</span>
           </div>
 
           <motion.button
@@ -241,7 +292,7 @@ export default function CheckoutPage() {
             disabled={loading || success}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-4 bg-white text-black font-serif text-lg rounded-2xl uppercase tracking-widest hover:brightness-110 transition"
+            className="w-full py-4 bg-white text-black font-light text-lg rounded-2xl uppercase tracking-widest hover:brightness-110 transition"
           >
             {loading ? "Processing..." : success ? "Order Placed!" : "Place Order"}
           </motion.button>
@@ -269,7 +320,7 @@ export default function CheckoutPage() {
               className="bg-black/90 text-white p-12 rounded-3xl shadow-2xl text-center max-w-lg border border-gold-500"
             >
 
-              <h2 className="text-3xl font-serif font-semibold mb-4">
+              <h2 className="text-3xl font-light font-semibold mb-4">
                 Thank you!
               </h2>
 
@@ -279,7 +330,7 @@ export default function CheckoutPage() {
 
               <button
                 onClick={() => setSuccess(false)}
-                className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:brightness-110 transition"
+                className="px-6 py-3 bg-white text-black font-light rounded-lg hover:brightness-110 transition"
               >
                 Close
               </button>

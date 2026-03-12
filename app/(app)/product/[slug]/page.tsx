@@ -57,7 +57,7 @@ export default async function Page({
           {/* Price */}
           <div>
             <p className="text-2xl tracking-widest">
-              ${product.price}
+              PKR {product.price}
             </p>
           </div>
   
