@@ -8,22 +8,34 @@ import { motion } from "framer-motion"
 
 const slides = [
   {
-    desktop: "/hero/d1.jpg",
+    desktop: "/hero/desktop-1.png",
     mobile: "/hero/m1.jpg",
-    label: "Winter 2026",
-    headline: "Silhouettes in Black",
+    label: "",
+    headline: "Collection from ADEEL HUB",
   },
   {
-    desktop: "/hero/d2.jpg",
+    desktop: "/hero/desktop-5.png",
     mobile: "/hero/m2.jpg",
-    label: "New Collection",
-    headline: "Refined Essentials",
+    label: "",
+    headline: "",
   },
   {
-    desktop: "/hero/d3.jpg",
+    desktop: "/hero/desktop-3.png",
     mobile: "/hero/m3.jpg",
-    label: "The Edit",
-    headline: "Modern Icons",
+    label: "",
+    headline: "",
+  },
+  {
+    desktop: "/hero/desktop-4.png",
+    mobile: "/hero/m3.jpg",
+    label: "",
+    headline: "",
+  },
+  {
+    desktop: "/hero/desktop-2.png",
+    mobile: "/hero/m3.jpg",
+    label: "",
+    headline: "",
   },
 ]
 

@@ -24,7 +24,7 @@ export default function LuxuryLoader() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          ZYRA
+          A D
         </motion.span>
       </motion.div>
     </AnimatePresence>

@@ -1,19 +1,19 @@
 {
   "version": 3,
-  "createdAt": "2026-03-07T18:07:39.176Z",
+  "createdAt": "2026-03-12T14:59:12.341Z",
   "workspaces": [
     {
       "name": "default",
-      "title": "Default",
+      "title": "Store Admin Dashboard",
       "basePath": "/studio",
       "projectId": "ey2625ij",
       "dataset": "production",
-      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#fdada5\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(5, 96%, 42%, 1)\" style=\"font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Liberation Sans&quot;, Helvetica, Arial, system-ui, sans-serif;font-weight:500;font-size:13px;transform:translateY(1px)\">D</text></svg>",
+      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#7c3404\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(24, 94%, 65%, 1)\" style=\"font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Liberation Sans&quot;, Helvetica, Arial, system-ui, sans-serif;font-weight:500;font-size:13px;transform:translateY(1px)\">SA</text></svg>",
       "mediaLibrary": {
         "enabled": false
       },
       "schema": "568feea5.create-schema.json",
-      "tools": "ba47da56.create-tools.json"
+      "tools": "d57bf8ec.create-tools.json"
     }
   ],
   "studioVersion": "4.22.0"

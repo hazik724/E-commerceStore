@@ -24,6 +24,8 @@ interface Product {
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
   const [filters, setFilters] = useState<FiltersState>({
     minPrice: 0,
     maxPrice: 10000,
@@ -31,12 +33,15 @@ export default function ProductsPage() {
     sizes: [],
     onSale: false,
   })
+
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [sortOption, setSortOption] = useState("newest")
 
   // Fetch Products
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true)
+
       const query = `*[_type == "product"] | order(_createdAt desc){
         _id,
         title,
@@ -48,8 +53,10 @@ export default function ProductsPage() {
       }`
 
       const result = await client.fetch(query)
+
       setProducts(result)
       setFilteredProducts(result)
+      setLoading(false)
     }
 
     fetchProducts()
@@ -107,6 +114,17 @@ export default function ProductsPage() {
     setFilteredProducts(updated)
   }, [filters, products, sortOption])
 
+  // ✅ Skeleton Component
+  function ProductSkeleton() {
+    return (
+      <div className="animate-pulse space-y-4">
+        <div className="w-full aspect-[4/5] bg-gray-200" />
+        <div className="h-4 bg-gray-200 w-3/4" />
+        <div className="h-4 bg-gray-200 w-1/2" />
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
 
@@ -116,7 +134,7 @@ export default function ProductsPage() {
           COLLECTION
         </h1>
         <p className="text-sm text-gray-500 tracking-widest uppercase">
-          {filteredProducts.length} Pieces
+          {loading ? "Loading..." : `${filteredProducts.length} Pieces`}
         </p>
       </div>
 
@@ -145,7 +163,12 @@ export default function ProductsPage() {
 
       {/* Product Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-16">
-        {filteredProducts.length > 0 ? (
+
+        {loading ? (
+          Array.from({ length: 8 }).map((_, i) => (
+            <ProductSkeleton key={i} />
+          ))
+        ) : filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
@@ -154,6 +177,7 @@ export default function ProductsPage() {
             No products found.
           </p>
         )}
+
       </div>
 
       {/* FILTER DRAWER */}

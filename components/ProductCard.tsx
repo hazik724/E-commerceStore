@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { urlFor } from "@/sanity/lib/image"
 import CartButton from "@/app/(app)/product/[slug]/CartButton"
+import { useState, useEffect } from "react"
 
 interface Variant {
   size?: string
@@ -26,6 +27,22 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
+
+  // ✅ carousel state
+  const [currentImage, setCurrentImage] = useState(0)
+
+  useEffect(() => {
+    if (!product.images || product.images.length === 0) return
+
+    const interval = setInterval(() => {
+      setCurrentImage((prev) =>
+        prev === product.images.length - 1 ? 0 : prev + 1
+      )
+    }, 2500)
+
+    return () => clearInterval(interval)
+  }, [product.images])
+
   return (
     <Link
       href={`/product/${product.slug.current}`}
@@ -33,16 +50,37 @@ export default function ProductCard({ product }: Props) {
     >
       {/* IMAGE */}
       <div className="relative w-full aspect-[4/5] bg-neutral-100 overflow-hidden">
-        <Image
-          src={
-            product.images?.[0]
-              ? urlFor(product.images[0]).width(800).height(1000).url()
-              : "/placeholder.png"
-          }
-          alt={product.title}
-          fill
-          className="object-cover transition duration-700 group-hover:scale-[1.03]"
-        />
+        
+        {/* ✅ SLIDER */}
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{
+            transform: `translateX(-${currentImage * 100}%)`,
+          }}
+        >
+          {product.images?.length > 0 ? (
+            product.images.map((img, index) => (
+              <div key={index} className="relative min-w-full h-full">
+                <Image
+                  src={urlFor(img).width(800).height(1000).url()}
+                  alt={product.title}
+                  fill
+                  className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="relative min-w-full h-full">
+              <Image
+                src="/placeholder.png"
+                alt="placeholder"
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+        </div>
+
       </div>
 
       {/* TEXT */}
@@ -62,15 +100,12 @@ export default function ProductCard({ product }: Props) {
             <span className="line-through text-neutral-400">
               ${product.price}
             </span>
-            
           )}
-        
 
         </div>
 
       </div>
-           
+
     </Link>
-    
   )
 }

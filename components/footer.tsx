@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
 
         <div>
-          <h2 className="text-xl font-bold mb-4">ZYRA</h2>
+          <h2 className="text-xl font-bold mb-4">ADEEL HUB</h2>
           <p className="text-sm text-gray-400">
             Premium fashion for modern lifestyle.
           </p>
@@ -35,7 +35,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-800 text-center py-4 text-sm text-gray-500">
-        © 2026 ZYRA. All rights reserved.
+        © 2026 ADEEL HUB. All rights reserved.
       </div>
     </footer>
   )
